@@ -1,0 +1,31 @@
+.card {
+  display: block;
+  margin: 10% auto;
+  border: 2px solid black;
+  width: 30%;
+  text-align: center;
+  padding: 3% 0%;
+}
+
+.card h3 {
+  margin: 5% 10%;
+}
+
+.loginDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginDetails input {
+  margin: 3% 10%;
+  background-color: transparent;
+  height: 30px;
+  font-size: 20px;
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+.loginDetails input::placeholder {
+  font-size: 18px;
+}

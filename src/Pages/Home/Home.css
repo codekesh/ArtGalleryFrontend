@@ -1,0 +1,77 @@
+.header img {
+  width: 100%;
+}
+
+.shops,
+.events,
+.collections,
+.news {
+  height: 400px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.contents,
+.evts,
+.clct,
+.nws {
+  position: relative;
+  top: 50px;
+  display: flex;
+}
+
+.cont_img,
+.evt_img,
+.clct_img,
+.nws_img {
+  width: 300px;
+  margin: 0px 13%;
+}
+
+.cont_dtl,
+.evt_dtl,
+.clct_dtl,
+.nws_dtl {
+  width: 50%;
+}
+
+.cont_head,
+.evt_head,
+.clct_head,
+.nws_head,
+.spon_head {
+  font-size: 40px;
+  color: #d0006e;
+}
+
+.cont_para,
+.evt_para,
+.clct_para,
+.nws_para {
+  margin-top: 18px;
+  margin-bottom: 40px;
+  font-size: 28px;
+  color: #d0006e;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.evts,
+.nws {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.owners {
+  display: block;
+  margin: 6% auto;
+  width: 15%;
+  text-align: center;
+}
+
+.owners img {
+  width: 120px;
+  border-radius: 10%;
+  border: 5px solid #d0006e;
+}

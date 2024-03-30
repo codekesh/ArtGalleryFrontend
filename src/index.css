@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika&di  splay=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Signika", sans-serif;
+}
+
+body {
+  padding-top: 90px;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0006e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e02a8b;
+  transition-duration: 0.3s;
+}

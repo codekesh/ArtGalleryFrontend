@@ -1,0 +1,17 @@
+.about {
+  display: flex;
+  width: 75%;
+  margin: auto;
+  align-items: center;
+}
+
+.owner {
+  margin: 12% 5% 10%;
+  text-align: center;
+}
+
+.owner img {
+  width: 180px;
+  border-radius: 10%;
+  border: 5px solid #d0006e;
+}
