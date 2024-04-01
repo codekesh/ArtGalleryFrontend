@@ -88,13 +88,10 @@ const Forgot = () => {
             </Grid>
             <Grid item xs={12}>
               <Button
-                type="button"
+                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  navigate("/Login");
-                }}
               >
                 Reset
               </Button>

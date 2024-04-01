@@ -54,7 +54,6 @@ const Profile = () => {
     setPassword(password);
   }, [auth?.user]);
 
-  console.log(auth?.user);
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {

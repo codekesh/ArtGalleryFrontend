@@ -36,7 +36,7 @@ const Shop = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8080/category");
+      const { data } = await axios.get("http://localhost:8000/category");
       if (data) {
         setCategories(data);
       }
