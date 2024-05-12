@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../../context/CartProvider";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,16 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import DropIn from "braintree-web-drop-in-react";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const totalPrice = () => {
@@ -26,8 +32,11 @@ const Cart = () => {
         style: "currency",
         currency: "USD",
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const removeCartItem = (pid) => {
     try {
       let myCart = [...cart];
@@ -35,8 +44,43 @@ const Cart = () => {
       myCart.splice(index, 1);
       setCart(myCart);
       localStorage.setItem("cart", JSON.stringify(myCart));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get("/braintree/token");
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post("/braintree/payment", {
+        nonce,
+        cart,
+      });
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/User/Userdashboard/orders");
+      toast.success("Payment Completed Successfully ");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div>
@@ -51,8 +95,9 @@ const Cart = () => {
       </div>
       <div>
         Cart Item
-        {cart?.map((p) => (
+        {cart?.map((p, i) => (
           <Card
+            key={i}
             sx={{
               maxWidth: 1000,
               margin: "1% 0% 1% 3%",
@@ -95,7 +140,54 @@ const Cart = () => {
         <div>
           <h4>Total | Checkout | Payment</h4>
           <hr />
-          <h4>Total : {totalPrice()} </h4>
+          <h4>Total : {totalPrice()}</h4>
+          {auth?.user?.address ? (
+            <>
+              <div>
+                <h4>Current Address</h4>
+                <h5>{auth.user.address}</h5>
+                <button onClick={() => navigate("/User/Userdashboard/profile")}>
+                  Update Address
+                </button>
+              </div>
+              <div>
+                {!clientToken || !cart?.length ? (
+                  ""
+                ) : (
+                  <>
+                    <DropIn
+                      options={{
+                        authorization: clientToken,
+                        paypal: {
+                          flow: "vault",
+                        },
+                      }}
+                      onInstance={(instance) => setInstance(instance)}
+                    />
+
+                    <button
+                      onClick={handlePayment}
+                      disabled={loading || !instance || !auth?.user?.address}
+                    >
+                      {loading ? "Processing ...." : "Make Payment"}
+                    </button>
+                  </>
+                )}
+              </div>
+            </>
+          ) : (
+            <div>
+              <button
+                onClick={() =>
+                  navigate("/login", {
+                    state: "/cart",
+                  })
+                }
+              >
+                Please login to checkout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

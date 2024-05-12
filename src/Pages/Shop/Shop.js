@@ -36,7 +36,7 @@ const Shop = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/category");
+      const { data } = await axios.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -53,7 +53,9 @@ const Shop = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/product-list/${page}`);
+      const { data } = await axios.get(
+        `/product-list/${page}`
+      );
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -79,7 +81,9 @@ const Shop = () => {
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/product-list/${page}`);
+      const { data } = await axios.get(
+        `/product-list/${page}`
+      );
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -108,10 +112,13 @@ const Shop = () => {
 
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/product-filters", {
-        checked,
-        radio,
-      });
+      const { data } = await axios.post(
+        "/product-filters",
+        {
+          checked,
+          radio,
+        }
+      );
       setProducts(data?.products);
     } catch (error) {
       console.log(error);

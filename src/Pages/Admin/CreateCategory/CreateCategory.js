@@ -48,7 +48,7 @@ const CreateCategory = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/category");
+      const { data } = await axios.get("/category");
       if (data) {
         setCategories(data);
       }

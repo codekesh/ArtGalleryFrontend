@@ -17,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/login", { email, password });
+      const res = await axios.post("/login", { email, password });
       if (res.data.success) {
         toast.success(res.data.message);
         setAuth({
@@ -65,6 +65,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 fullWidth
                 required
+                autoComplete="username"
               />
             </Grid>
 
@@ -78,6 +79,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 fullWidth
                 required
+                autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>

@@ -52,7 +52,7 @@ const CreateProduct = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/category");
+      const { data } = await axios.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -77,12 +77,16 @@ const CreateProduct = () => {
       productData.append("artists", artists);
       productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post("/create-product", productData);
+      productData.append("shipping", shipping);
+      const { data } = await axios.post(
+        "/create-product",
+        productData
+      );
       if (data?.success) {
         toast.success("Product Created Successfully");
+        navigate("/Admin/Admindashboard/products");
       } else {
         toast.error(data?.message);
-        navigate("/Admin/Admindashboard/products");
       }
     } catch (error) {
       console.log(error);

@@ -22,7 +22,7 @@ const Forgot = () => {
       });
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/login");
+        navigate("/Login");
       } else {
         toast.error(res.data.message);
       }

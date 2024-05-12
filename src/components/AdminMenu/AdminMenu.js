@@ -68,6 +68,13 @@ const AdminMenu = () => {
                   </ListItemButton>
                 </ListItem>
               </StyledNavLink>
+              <StyledNavLink to="/Admin/Admindashboard/orders">
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <StyledListItemText primary="Orders" />
+                  </ListItemButton>
+                </ListItem>
+              </StyledNavLink>
             </List>
           </nav>
         </CardContent>

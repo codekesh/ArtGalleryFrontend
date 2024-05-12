@@ -33,15 +33,15 @@ const Profile = () => {
 
   useEffect(() => {
     const {
-      name,
       dob,
-      gender,
-      contact,
+      name,
       email,
+      gender,
+      answer,
+      contact,
       address,
       username,
       password,
-      answer,
     } = auth?.user;
     setDob(dob);
     setName(name);
@@ -52,12 +52,13 @@ const Profile = () => {
     setAddress(address);
     setUsername(username);
     setPassword(password);
+    setConfipass(password);
   }, [auth?.user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/users", {
+      const { data } = await axios.put("/profile", {
         name,
         dob,
         gender,
@@ -65,14 +66,24 @@ const Profile = () => {
         email,
         address,
         username,
-        password,
+        password, 
         answer,
       });
+      if (data?.error) {
+        toast.error(data?.error);
+      } else {
+        setAuth({ ...auth, user: data?.updatedUser });
+        let ls = localStorage.getItem("auth");
+        ls = JSON.parse(ls);
+        ls.user = data.updatedUser;
+        localStorage.setItem("auth", JSON.stringify(ls));
+        toast.success("Profile updated successfully");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
-  };
+  };  
 
   return (
     <>
@@ -105,11 +116,10 @@ const Profile = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
-              {/* DOB */}
+              {/* DOB */} 
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Date of Birth"
@@ -121,7 +131,6 @@ const Profile = () => {
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -163,7 +172,6 @@ const Profile = () => {
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -176,7 +184,6 @@ const Profile = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -189,7 +196,6 @@ const Profile = () => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -202,7 +208,6 @@ const Profile = () => {
                   type="type"
                   onChange={(e) => setUsername(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -215,7 +220,6 @@ const Profile = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
 
@@ -228,7 +232,6 @@ const Profile = () => {
                   value={confipass}
                   onChange={(e) => setConfipass(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
               {/* answer */}
@@ -240,7 +243,6 @@ const Profile = () => {
                   value={answer}
                   onChange={(e) => setAnswer(e.target.value)}
                   fullWidth
-                  required
                 />
               </Grid>
               <Grid item xs={12}>

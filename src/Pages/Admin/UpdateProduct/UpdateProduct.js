@@ -49,19 +49,24 @@ const UpdateProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [artists, setArtists] = useState("");
   const [photo, setPhoto] = useState("");
-  const [shipping, setShipping] = useState("");
+  const [shipping, setShipping] = useState(0);
   const [id, setId] = useState("");
 
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(`/product/${params.slug}`);
+      const { data } = await axios.get(
+        `/product/${params.slug}`
+      );
+      console.log(data);
       setName(data.productData.name);
       setId(data.productData._id);
       setDescription(data.productData.description);
       setPrice(data.productData.price);
       setArtists(data.productData.artists);
       setQuantity(data.productData.quantity);
-      setShipping(data.productData.shipping);
+      if (data.productData.shipping) {
+        setShipping(1);
+      }
       setCategory(data.productData.category._id);
     } catch (error) {
       console.log(error);
@@ -70,7 +75,7 @@ const UpdateProduct = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/category");
+      const { data } = await axios.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -96,7 +101,11 @@ const UpdateProduct = () => {
       productData.append("artists", artists);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(`/update-product/${id}`, productData);
+      productData.append("shipping", shipping);
+      const { data } = axios.put(
+        `/update-product/${id}`,
+        productData
+      );
       if (data?.success) {
         toast.success("Product Updated Successfully");
       } else {
@@ -113,7 +122,9 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      const { data } = await axios.delete(`/delete-product/${id}`);
+      const { data } = await axios.delete(
+        `/delete-product/${id}`
+      );
       toast.success(`${data} Deleted Successfully`);
       navigate("/Admin/Admindashboard/products");
     } catch (error) {
