@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
+  Box,
   CardActions,
   CardContent,
   CardMedia,
@@ -13,9 +14,11 @@ import {
 import axios from "axios";
 import DropIn from "braintree-web-drop-in-react";
 import { toast } from "react-toastify";
+import Footer from "../../components/Footer/Footer";
+import Copyright from "../../components/Copyright/Copyright";
 
 const Cart = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
@@ -24,16 +27,14 @@ const Cart = () => {
 
   const totalPrice = () => {
     try {
-      let total = 0;
-      cart?.map((item) => {
-        total += item.price;
-      });
+      const total = cart.reduce((acc, item) => acc + item.price, 0);
       return total.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
       });
     } catch (error) {
       console.log(error);
+      return "Error calculating total price";
     }
   };
 
@@ -62,6 +63,7 @@ const Cart = () => {
     getToken();
   }, [auth?.token]);
 
+  console.log(auth?.token);
   const handlePayment = async () => {
     try {
       setLoading(true);
@@ -84,77 +86,106 @@ const Cart = () => {
   return (
     <>
       <div>
-        <h1>{`Hello ${auth?.token && auth?.user?.name}`}</h1>
-        <h4>
+        <Typography
+          variant="h4"
+          gutterBottom
+          textAlign="center"
+          sx={{ margin: "20px" }}
+        >{`Hello! ${auth?.token && auth?.user?.name}`}</Typography>
+        <Typography
+          variant="h5"
+          gutterBottom
+          textAlign="center"
+          sx={{ marginTop: "10px" }}
+        >
           {cart?.length
             ? `You have ${cart.length} items in your cart ${
                 auth?.token ? "" : "Please login in checkout"
               }`
             : "Your cart is empty"}
-        </h4>
+        </Typography>
       </div>
-      <div>
-        Cart Item
-        {cart?.map((p, i) => (
-          <Card
-            key={i}
-            sx={{
-              maxWidth: 1000,
-              margin: "1% 0% 1% 3%",
-              display: "flex",
-              borderRadius: "15px",
-              "&:hover": {
-                boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)",
-              },
-            }}
-          >
-            <CardMedia
-              component="img"
-              height="150"
-              image={`/product-photo/${p._id}`}
-              alt={p.name}
-              style={{}}
-            />
-            <CardContent>
-              <Typography variant="body2" gutterBottom>
-                {p.name}
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                {p.description.substring(0, 20)}...
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom>
-                Pirce: ${p.price}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                variant="contained"
-                onClick={() => removeCartItem(p._id)}
-              >
-                Remove
-              </Button>
-            </CardActions>
-          </Card>
-        ))}
-        <div>
-          <h4>Total | Checkout | Payment</h4>
+      <div style={{ display: "flex", flexDirection: "row", margin: "40px" }}>
+        <Box sx={{ width: "50%" }}>
+          {cart?.map((p, i) => (
+            <Card
+              key={i}
+              sx={{
+                maxWidth: 400,
+                display: "flex",
+                margin: "2% 10%",
+                borderRadius: "15px",
+                "&:hover": {
+                  boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)",
+                },
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="260"
+                image={`/product-photo/${p._id}`}
+                alt={p.name}
+              />
+              <div>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {p.name}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {p.description.substring(0, 20)}...
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Price: ${p.price}
+                  </Typography>
+                  <CardActions>
+                    <Button
+                      sx={{ backgroundColor: "#d0006e" }}
+                      variant="contained"
+                      onClick={() => removeCartItem(p._id)}
+                    >
+                      Remove
+                    </Button>
+                  </CardActions>
+                </CardContent>
+              </div>
+            </Card>
+          ))}
+        </Box>
+        <Box>
+          <Typography variant="h5" gutterBottom textAlign="center">
+            Total | Checkout | Payment
+          </Typography>
           <hr />
-          <h4>Total : {totalPrice()}</h4>
+          <Typography variant="h6" gutterBottom>
+            <strong>Total</strong> : {totalPrice()}
+          </Typography>
           {auth?.user?.address ? (
             <>
               <div>
-                <h4>Current Address</h4>
-                <h5>{auth.user.address}</h5>
-                <button onClick={() => navigate("/User/Userdashboard/profile")}>
+                <Typography variant="h6" gutterBottom>
+                  <strong>Current Address</strong>: {auth.user.address}
+                </Typography>
+                <Button
+                  sx={{ backgroundColor: "#d0006e", margin: "20px 0px" }}
+                  variant="contained"
+                  onClick={() => navigate("/User/Userdashboard/profile")}
+                >
                   Update Address
-                </button>
+                </Button>
               </div>
               <div>
-                {!clientToken || !cart?.length ? (
+                {!auth?.token || !clientToken || !cart?.length ? (
                   ""
                 ) : (
                   <>
+                    <Button
+                      sx={{ backgroundColor: "#d0006e", margin: "5px 0px" }}
+                      variant="contained"
+                      onClick={handlePayment}
+                      disabled={loading || !instance || !auth?.user?.address}
+                    >
+                      {loading ? "Processing ...." : "Make Payment"}
+                    </Button>
                     <DropIn
                       options={{
                         authorization: clientToken,
@@ -164,20 +195,15 @@ const Cart = () => {
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />
-
-                    <button
-                      onClick={handlePayment}
-                      disabled={loading || !instance || !auth?.user?.address}
-                    >
-                      {loading ? "Processing ...." : "Make Payment"}
-                    </button>
                   </>
                 )}
               </div>
             </>
           ) : (
             <div>
-              <button
+              <Button
+                sx={{ backgroundColor: "#d0006e", margin: "5px 0px" }}
+                variant="contained"
                 onClick={() =>
                   navigate("/login", {
                     state: "/cart",
@@ -185,11 +211,13 @@ const Cart = () => {
                 }
               >
                 Please login to checkout
-              </button>
+              </Button>
             </div>
           )}
-        </div>
+        </Box>
       </div>
+      <Footer />
+      <Copyright />
     </>
   );
 };

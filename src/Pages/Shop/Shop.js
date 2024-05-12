@@ -208,7 +208,6 @@ const Shop = () => {
                     height="194"
                     image={`/product-photo/${p._id}`}
                     alt={p.name}
-                    style={{}}
                   />
                   <CardContent>
                     <Typography variant="h6" color="text.secondary">
