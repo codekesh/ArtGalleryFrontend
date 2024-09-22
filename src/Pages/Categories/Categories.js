@@ -2,6 +2,8 @@ import { Button } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import useCategory from "../../hooks/useCategory";
+import Footer from "../../components/Footer/Footer";
+import Copyright from "../../components/Copyright/Copyright";
 
 const Categories = () => {
   const categories = useCategory();
@@ -15,6 +17,8 @@ const Categories = () => {
           </NavLink>
         ))}
       </div>
+      <Footer />
+      <Copyright />
     </>
   );
 };
