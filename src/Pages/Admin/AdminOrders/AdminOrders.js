@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import Footer from "../../../components/Footer/Footer";
+import Copyright from "../../../components/Copyright/Copyright";
 import { useAuth } from "../../../context/AuthProvider";
 import AdminMenu from "../../../components/AdminMenu/AdminMenu";
 import moment from "moment";
-import { Select } from "antd";
-const { Option } = Select;
+import {
+  Select,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+} from "@mui/material";
 
 export const AdminOrders = () => {
   const [status, setStatus] = useState([
     "Not Process",
     "Processing",
     "Shipped",
-    "deliverd",
-    "cancel",
+    "Delivered",
+    "Cancelled",
   ]);
-  const [changeStatus, setCHangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
+
   const getOrders = async () => {
     try {
       const { data } = await axios.get("/all-orders");
@@ -33,9 +48,7 @@ export const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      const { data } = await axios.put(`/order-status/${orderId}`, {
-        status: value,
-      });
+      await axios.put(`/order-status/${orderId}`, { status: value });
       getOrders();
     } catch (error) {
       console.log(error);
@@ -44,74 +57,83 @@ export const AdminOrders = () => {
 
   return (
     <>
-      <div className="row dashboard">
-        <div className="col-md-3">
-          <AdminMenu />
-        </div>
-        <div className="col-md-9">
-          <h1 className="text-center">All Orders</h1>
-          {orders?.map((o, i) => {
-            return (
-              <div className="border shadow">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Buyer</th>
-                      <th scope="col"> date</th>
-                      <th scope="col">Payment</th>
-                      <th scope="col">Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{i + 1}</td>
-                      <td>
-                        <Select
-                          bordered={false}
-                          onChange={(value) => handleChange(o._id, value)}
-                          defaultValue={o?.status}
-                        >
-                          {status.map((s, i) => (
-                            <Option key={i} value={s}>
-                              {s}
-                            </Option>
-                          ))}
-                        </Select>
-                      </td>
-                      <td>{o?.buyer?.name}</td>
-                      <td>{moment(o?.createAt).fromNow()}</td>
-                      <td>{o?.payment.success ? "Success" : "Failed"}</td>
-                      <td>{o?.products?.length}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div className="container">
-                  {o?.products?.map((p, i) => (
-                    <div className="row mb-2 p-3 card flex-row" key={p._id}>
-                      <div className="col-md-4">
-                        <img
-                          src={`/api/v1/product/product-photo/${p._id}`}
-                          className="card-img-top"
-                          alt={p.name}
-                          width="100px"
-                          height={"100px"}
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <p>{p.name}</p>
-                        <p>{p.description.substring(0, 30)}</p>
-                        <p>Price : {p.price}</p>
-                      </div>
-                    </div>
+      <Box sx={{ padding: "2rem", display: 'flex' }}>
+        <AdminMenu />
+        <div style={{ marginLeft: '40px' }}>
+          <Typography variant="h4" align="center" gutterBottom>
+            All Orders
+          </Typography>
+          {orders.length === 0 ? (
+            <Typography variant="h3" align="center" color="textSecondary">
+              No body ordered yet🥺
+            </Typography>
+          ) : (
+            orders.map((o, i) => (
+              <Box key={i} mb={4}>
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>#</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Buyer</TableCell>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Payment</TableCell>
+                        <TableCell>Quantity</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>
+                          <Select
+                            value={o?.status}
+                            onChange={(e) => handleChange(o._id, e.target.value)}
+                            fullWidth
+                            variant="outlined"
+                          >
+                            {status.map((s, index) => (
+                              <MenuItem key={index} value={s}>
+                                {s}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </TableCell>
+                        <TableCell>{o?.buyer?.name}</TableCell>
+                        <TableCell>{moment(o?.createAt).fromNow()}</TableCell>
+                        <TableCell>{o?.payment.success ? "Success" : "Failed"}</TableCell>
+                        <TableCell>{o?.products?.length}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                <Box className="container">
+                  {o?.products?.map((p) => (
+                    <Card key={p._id} sx={{ display: "flex", marginBottom: "1rem" }}>
+                      <CardMedia
+                        component="img"
+                        image={`/product-photo/${p._id}`}
+                        alt={p.name}
+                        sx={{ width: 150, height: 150 }}
+                      />
+                      <CardContent>
+                        <Typography variant="h6">{p.name}</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {p.description.substring(0, 30)}...
+                        </Typography>
+                        <Typography variant="subtitle1">Price: {p.price}</Typography>
+                      </CardContent>
+                    </Card>
                   ))}
-                </div>
-              </div>
-            );
-          })}
+                </Box>
+              </Box>
+            ))
+          )}
         </div>
-      </div>
+      </Box>
+      <Footer />
+      <Copyright />
     </>
   );
 };

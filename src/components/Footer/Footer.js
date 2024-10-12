@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import "./Footer.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const Footer = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const navigate = useNavigate();
   const logo = require("../../images/Homes/logo1.png");
 
   const handleSubmit = async (event) => {
