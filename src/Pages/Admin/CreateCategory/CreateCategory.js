@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../../../components/Footer/Footer";
 import Copyright from "../../../components/Copyright/Copyright";
 import AdminMenu from "../../../components/AdminMenu/AdminMenu";
-import toast from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import axios from "axios";
@@ -36,7 +36,7 @@ const CreateCategory = () => {
     try {
       const { data } = await axios.post("/create-category", { name });
       if (data?.success) {
-        toast.success(`${data.name} is created`);
+        toast.success(`${data.category.name} is created`);
         getAllCategory();
       } else {
         toast.error(data.message);
@@ -85,8 +85,9 @@ const CreateCategory = () => {
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(`/delete-category/${id}`);
+      console.log(data)
       if (data.name) {
-        toast.success(`Category is deleted`);
+        toast.success(`${data.name}} is deleted`);
         getAllCategory();
       } else {
         toast.error(data.message);
@@ -191,6 +192,7 @@ const CreateCategory = () => {
       </div>
       <Footer />
       <Copyright />
+      <ToastContainer />
     </>
   );
 };

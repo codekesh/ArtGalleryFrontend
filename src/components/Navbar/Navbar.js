@@ -7,6 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/CartProvider";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -20,6 +21,7 @@ const Navbar = () => {
       user: null,
       token: "",
     });
+    toast.success("Logout Successfully");
     localStorage.removeItem("auth");
   };
 

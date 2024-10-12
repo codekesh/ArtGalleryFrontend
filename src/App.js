@@ -7,7 +7,7 @@ import News from "./Pages/News/News";
 import About from "./Pages/About/About";
 import { Routes, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login";
-import Signup from "./Pages/Signup/SIgnup.js";
+import Signup from "./Pages/Signup/Signup.js";
 import "react-toastify/dist/ReactToastify.css";
 import Private from "./components/Routes/Private/Private.js";
 import Forgot from "./Pages/Forgot/Forgot.js";

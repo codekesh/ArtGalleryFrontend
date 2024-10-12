@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import DropIn from "braintree-web-drop-in-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
 import Copyright from "../../components/Copyright/Copyright";
 
@@ -63,7 +63,6 @@ const Cart = () => {
     getToken();
   }, [auth?.token]);
 
-  console.log(auth?.token);
   const handlePayment = async () => {
     try {
       setLoading(true);
@@ -75,7 +74,9 @@ const Cart = () => {
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);
-      navigate("/User/Userdashboard/orders");
+      setTimeout(() => {
+        navigate("/User/Userdashboard/orders");
+      }, 1000);
       toast.success("Payment Completed Successfully ");
     } catch (error) {
       console.log(error);
@@ -99,9 +100,8 @@ const Cart = () => {
           sx={{ marginTop: "10px" }}
         >
           {cart?.length
-            ? `You have ${cart.length} items in your cart ${
-                auth?.token ? "" : "Please login in checkout"
-              }`
+            ? `You have ${cart.length} items in your cart ${auth?.token ? "" : "Please login in checkout"
+            }`
             : "Your cart is empty"}
         </Typography>
       </div>
@@ -218,6 +218,7 @@ const Cart = () => {
       </div>
       <Footer />
       <Copyright />
+      <ToastContainer />
     </>
   );
 };

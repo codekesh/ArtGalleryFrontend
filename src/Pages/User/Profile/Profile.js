@@ -15,8 +15,8 @@ import {
   FormLabel,
   RadioGroup,
 } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const [auth, setAuth] = useAuth();
@@ -66,24 +66,24 @@ const Profile = () => {
         email,
         address,
         username,
-        password, 
+        password,
         answer,
       });
       if (data?.error) {
         toast.error(data?.error);
       } else {
+        toast.success("Profile updated successfully");
         setAuth({ ...auth, user: data?.updatedUser });
         let ls = localStorage.getItem("auth");
         ls = JSON.parse(ls);
         ls.user = data.updatedUser;
         localStorage.setItem("auth", JSON.stringify(ls));
-        toast.success("Profile updated successfully");
       }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
-  };  
+  };
 
   return (
     <>
@@ -119,7 +119,7 @@ const Profile = () => {
                 />
               </Grid>
 
-              {/* DOB */} 
+              {/* DOB */}
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Date of Birth"
@@ -261,6 +261,7 @@ const Profile = () => {
       </div>
       <Footer />
       <Copyright />
+      <ToastContainer />
     </>
   );
 };

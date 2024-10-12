@@ -48,7 +48,9 @@ const Signup = () => {
       });
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/Login");
+        setTimeout(() => {
+          navigate("/Login");
+        }, 1000);
       } else {
         toast.error(res.data.message);
       }

@@ -2,19 +2,9 @@
 
 ### Problem
 
-1. Toaster not working properly When toaster shall work
-    - New Account Created
-    - Login
-    - Logout
-    - Forgot Password
-    - Update Credentials
-    - Order Done
-    - Create Category
-    - Create Products
-    - Update Products
+1. Performance of the page is decrease while increase in item
 2. Any unwanted page will show the error page not found 
 3. Instead load more add pages
-4. Performance of the page is decrease while increase in item
 
 ### What shall be implement
 1. when user click logged, remove "about us" section from navbar
