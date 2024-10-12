@@ -10,15 +10,12 @@ const About = () => {
       <section className="about">
         <section className="owner">
           <img src={own_img1} alt="" />
-          <h4>"Owners"</h4>
+          <h4>"Founder"</h4>
           <p>— Keshav Tulsyan</p>
         </section>
-        <h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-          officia quidem blanditiis hic fugiat velit, commodi excepturi
-          doloremque repellendus sint obcaecati? Laudantium nobis neque, ab amet
-          esse maiores mollitia temporibus.
-        </h1>
+        <h2>
+          I am Keshav Tulsyan graduated in 2024 from IIIT Trichy major in CSE. I would like to introduce the best and India's biggest no. 1 platform for sharing magnificent art, purchasing and selling artworks with different categories, regular events and daily blogs. Jump on our platform for experience our services. Thanks!
+        </h2>
       </section>
       <Footer />
       <Copyright />

@@ -2,14 +2,23 @@
 
 ### Problem
 
-1. Forgot password doesn't work
-2. Toaster not working properly
-3. Couldn't able to register
-4. remove gibbrish text in about us and add some more text
-5. Fix user panel in dashboard
-6. Fix panel for manage database
-7. Any unwanted page will show the error page not found
-8. Correct the subscribed form make user notify people in email as well
+1. Forgot password doesn't work ✅
+2. Toaster not working properly When toaster shall work
+    - New Account Created
+    - Login
+    - Logout
+    - Forgot Password
+    - Update Credentials
+    - Order Done
+    - Create Category
+    - Create Products
+    - Update Products
+3. Couldn't able to register ✅
+4. remove gibbrish text in about us and add some more text ✅
+5. Fix user panel in dashboard ✅
+6. Fix panel for manage database ✅
+7. Any unwanted page will show the error page not found 
+8. Correct the subscribed form make notify people in email as well ✅
 9. Instead load more add pages
 10. Performance of the page is decrease while increase in item
 11. Fix UI in orders

@@ -1,10 +1,31 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, TextField } from "@mui/material";
 import "./Footer.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Footer = () => {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
   const logo = require("../../images/Homes/logo1.png");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await axios.post("/create-subscribers", { name, email });
+      if (res.data.success) {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <footer>
       <div className="left-side">
@@ -53,12 +74,52 @@ const Footer = () => {
       </div>
 
       <div className="right-side">
-        <form action="get" className="form">
+        <form onSubmit={handleSubmit} className="form">
           <h2>Subscribe to us to know about events, exhibitions and news</h2>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Email ID" />
+          <TextField
+            label="Full Name"
+            name="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+            required
+            InputProps={{
+              style: {
+                color: 'white',
+                height: '50px',
+              }
+            }}
+            InputLabelProps={{
+              style: {
+                color: 'white',
+              }
+            }}
+          />
+          <TextField
+            label="Email"
+            name="email"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            required
+            InputProps={{
+              style: {
+                color: 'white',
+                height: '50px',
+              }
+            }}
+            InputLabelProps={{
+              style: {
+                color: 'white',
+              }
+            }}
+          />
           <Button
             variant="contained"
+            type="submit"
             style={{
               color: "white",
               background: "#D0006E",

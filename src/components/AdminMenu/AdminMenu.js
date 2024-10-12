@@ -15,7 +15,7 @@ const StyledCard = styled(Card)({
   margin: "8% 1% 8% 3%",
   textAlign: "center",
   boxShadow: "0px 0px 15px 0px grey",
-  height: "300px",
+  height: "330px",
 });
 
 const StyledNavLink = styled(NavLink)({
@@ -68,6 +68,7 @@ const AdminMenu = () => {
                   </ListItemButton>
                 </ListItem>
               </StyledNavLink>
+              <Divider component="li" />
               <StyledNavLink to="/Admin/Admindashboard/orders">
                 <ListItem disablePadding>
                   <ListItemButton>
