@@ -47,13 +47,25 @@ const Navbar = () => {
           Shops
         </NavLink>
         <Button
-          variant="contained"
+          variant="text"
+          style={{
+            fontSize: "20px",
+            marginRight: "30px",
+            textDecoration: "none",
+            color: "white",
+            fontWeight: 600,
+            backgroundColor: "transparent",
+            transition: "none",
+            bottom: '2px',
+            textTransform: "none"
+          }}
           aria-controls="simple-menu"
           aria-haspopup="true"
           onClick={handleClick}
         >
           Services
         </Button>
+
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -76,9 +88,9 @@ const Navbar = () => {
         <NavLink className="nav-link" to="/News">
           News
         </NavLink>
-        <NavLink className="nav-link" to="/About">
+        {!auth.user && <NavLink className="nav-link" to="/About">
           About Us
-        </NavLink>
+        </NavLink>}
         <NavLink className="nav-link" to="/Cart">
           <Badge badgeContent={cart?.length} color="success">
             <ShoppingCartIcon />
@@ -111,11 +123,10 @@ const Navbar = () => {
           <>
             <NavLink
               className="nav-link"
-              to={`${
-                auth?.user?.role === 1
-                  ? "/Admin/Admindashboard"
-                  : "/User/Userdashboard"
-              }`}
+              to={`${auth?.user?.role === 1
+                ? "/Admin/Admindashboard"
+                : "/User/Userdashboard"
+                }`}
             >
               Dashboard
             </NavLink>
