@@ -14,6 +14,5 @@
 5. Add link in footer sections
 6. Remove Collections and add about us
 7. Remove owners
-8. Correct Services button
+8. Manage the events and database 
 9. Remove admin as user only role is admin
-10. Manage the events and database 

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const CategoryProduct = () => {
@@ -17,11 +17,7 @@ const CategoryProduct = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
 
-  useEffect(() => {
-    if (params?.slug) getProductsByCategory();
-  }, [params?.slug]);
-
-  const getProductsByCategory = async () => {
+  const getProductsByCategory = useCallback(async () => {
     try {
       const { data } = await axios.get(`/product-category/${params?.slug}`);
       setCategory(data?.category);
@@ -29,7 +25,11 @@ const CategoryProduct = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [params?.slug]);
+
+  useEffect(() => {
+    if (params?.slug) getProductsByCategory();
+  }, [getProductsByCategory, params?.slug]);
 
   return (
     <div>
