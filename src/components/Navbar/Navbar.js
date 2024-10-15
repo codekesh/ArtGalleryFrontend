@@ -56,8 +56,8 @@ const Navbar = () => {
             fontWeight: 600,
             backgroundColor: "transparent",
             transition: "none",
-            bottom: '2px',
-            textTransform: "none"
+            bottom: "2px",
+            textTransform: "none",
           }}
           aria-controls="simple-menu"
           aria-haspopup="true"
@@ -77,7 +77,7 @@ const Navbar = () => {
             <MenuItem onClick={handleClose}>All Categories</MenuItem>
           </NavLink>
           {categories?.map((c) => (
-            <NavLink to={`/categories/${c.slug}`} key={c._id}>
+            <NavLink to={`/shop?category=${c._id}`} key={c._id}>
               <MenuItem onClick={handleClose}>{c.name}</MenuItem>
             </NavLink>
           ))}
@@ -88,9 +88,11 @@ const Navbar = () => {
         <NavLink className="nav-link" to="/News">
           News
         </NavLink>
-        {!auth.user && <NavLink className="nav-link" to="/About">
-          About Us
-        </NavLink>}
+        {!auth.user && (
+          <NavLink className="nav-link" to="/About">
+            About Us
+          </NavLink>
+        )}
         <NavLink className="nav-link" to="/Cart">
           <Badge badgeContent={cart?.length} color="success">
             <ShoppingCartIcon />
@@ -123,10 +125,11 @@ const Navbar = () => {
           <>
             <NavLink
               className="nav-link"
-              to={`${auth?.user?.role === 1
-                ? "/Admin/Admindashboard"
-                : "/User/Userdashboard"
-                }`}
+              to={`${
+                auth?.user?.role === 1
+                  ? "/Admin/Admindashboard"
+                  : "/User/Userdashboard"
+              }`}
             >
               Dashboard
             </NavLink>

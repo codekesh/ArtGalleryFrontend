@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Prices } from "../../components/Prices/Prices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCart } from "../../context/CartProvider";
 
@@ -33,6 +33,8 @@ const Shop = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
 
   const getAllCategory = async () => {
     try {
@@ -50,12 +52,18 @@ const Shop = () => {
     getTotal();
   }, []);
 
+  useEffect(() => {
+    if (categoryFromUrl) {
+      setChecked([categoryFromUrl]);
+    } else {
+      getAllProducts();
+    }
+  }, [categoryFromUrl]);
+
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `/product-list/${page}`
-      );
+      const { data } = await axios.get(`/product-list/${page}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -81,9 +89,7 @@ const Shop = () => {
   const loadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `/product-list/${page}`
-      );
+      const { data } = await axios.get(`/product-list/${page}`);
       setLoading(false);
       setProducts([...products, ...data?.products]);
     } catch (error) {
@@ -107,18 +113,17 @@ const Shop = () => {
   }, [checked.length, radio.length]);
 
   useEffect(() => {
-    if (checked.length || radio.length) filterProduct();
+    if (checked.length || radio.length) {
+      filterProduct();
+    }
   }, [checked, radio]);
 
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post(
-        "/product-filters",
-        {
-          checked,
-          radio,
-        }
-      );
+      const { data } = await axios.post("/product-filters", {
+        checked,
+        radio,
+      });
       setProducts(data?.products);
     } catch (error) {
       console.log(error);
@@ -149,6 +154,7 @@ const Shop = () => {
                 key={c._id}
                 control={
                   <Checkbox
+                    checked={checked.includes(c._id)}
                     onChange={(e) => handleFilter(e.target.checked, c._id)}
                   />
                 }

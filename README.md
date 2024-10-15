@@ -7,12 +7,11 @@
 3. Instead load more add pages
 
 ### What shall be implement
-1. Add something on header section
-2. If click on any categories, it should redirect the page of shops and check the checkbox in categories
+1. Remove admin as user only role is admin
+2. Add something on header section
 3. Do something in event
 4. Do something in news
 5. Add link in footer sections
 6. Remove Collections and add about us
 7. Remove owners
 8. Manage the events and database 
-9. Remove admin as user only role is admin
