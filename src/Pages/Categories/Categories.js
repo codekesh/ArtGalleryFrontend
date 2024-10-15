@@ -12,7 +12,7 @@ const Categories = () => {
       <h1>All Categories</h1>
       <div>
         {categories?.map((c) => (
-          <NavLink to={`/categories/${c.slug}`} key={c._id}>
+          <NavLink to={`/shop?category=${c._id}`} key={c._id}>
             <Button>{c.name}</Button>
           </NavLink>
         ))}
