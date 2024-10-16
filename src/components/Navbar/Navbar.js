@@ -72,13 +72,54 @@ const Navbar = () => {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
+          sx={{
+            "& .MuiPaper-root": {
+              backgroundColor: "#303030",
+              color: "white",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.3)",
+            },
+          }}
         >
-          <NavLink to={"/categories"}>
-            <MenuItem onClick={handleClose}>All Categories</MenuItem>
+          <NavLink
+            to={"/categories"}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#f50057",
+                  color: "white",
+                },
+              }}
+            >
+              All Categories
+            </MenuItem>
           </NavLink>
           {categories?.map((c) => (
-            <NavLink to={`/shop?category=${c._id}`} key={c._id}>
-              <MenuItem onClick={handleClose}>{c.name}</MenuItem>
+            <NavLink
+              to={`/shop?category=${c._id}`}
+              key={c._id}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#f50057",
+                    color: "white",
+                  },
+                }}
+              >
+                {c.name}
+              </MenuItem>
             </NavLink>
           ))}
         </Menu>

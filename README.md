@@ -13,5 +13,4 @@
 3. Do something in event
 4. Do something in news
 5. Add link in footer sections
-6. Remove Collections and add about us
-7. Manage the events and database
+6. Manage the events and database
