@@ -15,4 +15,3 @@
 5. Add link in footer sections
 6. Remove Collections and add about us
 7. Manage the events and database
-8. Redesign the more details
