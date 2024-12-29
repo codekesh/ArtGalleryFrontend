@@ -11,6 +11,10 @@ import {
   CardMedia,
   Grid,
   Typography,
+  Container,
+  Box,
+  Divider,
+  Paper,
 } from "@mui/material";
 
 const Productpage = () => {
@@ -44,78 +48,108 @@ const Productpage = () => {
 
   return (
     <>
-      <div>
+      <Container sx={{ py: 2 }}>
         {product._id && (
-          <>
-            <img
-              src={`/product-photo/${product?._id}`}
-              alt={product?.name}
-              height="300"
-              width={"350px"}
-            />
-            <div>
-              <h1>Details</h1>
-              <p>Name: {product.name}</p>
-              <p>Description: {product.description}</p>
-              {product.category && <p>Category: {product.category.name}</p>}
-              <p>Quantity: {product.quantity}</p>
-              <Button size="small" variant="contained">
-                Add To Cart
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
-
-      <hr />
-      {relatedProducts.length < 1 && <p>No Similar Products found</p>}
-      <Grid container>
-        {relatedProducts?.map((p) => (
-          <Grid item xs={12} sm={3} key={p._id}>
-            <Card
-              sx={{
-                maxWidth: 280,
-                margin: "10% 0% 10% 3%",
-                borderRadius: "15px",
-                "&:hover": {
-                  boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)",
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="194"
-                image={`/product-photo/${p?._id}`}
-                alt={p.name}
-                style={{}}
-              />
-              <CardContent>
-                <Typography variant="h6" color="text.secondary">
-                  {p.name}
+          <Paper elevation={4} sx={{ p: 3, borderRadius: "10px" }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={5}>
+                <img
+                  src={`/product-photo/${product?._id}`}
+                  alt={product?.name}
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                    objectFit: "cover",
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={7}>
+                <Typography variant="h4" gutterBottom>
+                  {product.name}
                 </Typography>
-                <Typography variant="p" color="text.secondary">
-                  {p.description.substring(0, 25)}...
+                <Typography variant="body1" color="text.secondary" gutterBottom>
+                  {product.description}
                 </Typography>
-                <Typography variant="h6" color="text.secondary">
-                  ${p.price}
-                </Typography>
-              </CardContent>
-              <CardActions>
+                {product.category && (
+                  <Typography variant="subtitle1" color="text.primary">
+                    Category: {product.category.name}
+                  </Typography>
+                )}
                 <Button
-                  size="small"
+                  size="large"
                   variant="contained"
-                  onClick={() => navigate(`/product/${p.slug}`)}
+                  color="primary"
+                  sx={{ mt: 2 }}
                 >
-                  More Details
-                </Button>
-                <Button size="small" variant="contained">
                   Add To Cart
                 </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        )}
+      </Container>
+
+      <Divider sx={{ my: 3 }} />
+
+      <Container>
+        <Typography variant="h5" gutterBottom>
+          Related Products
+        </Typography>
+
+        {relatedProducts.length < 1 && (
+          <Typography>No Similar Products found</Typography>
+        )}
+
+        <Grid container spacing={4}>
+          {relatedProducts?.map((p) => (
+            <Grid item xs={12} sm={6} md={3} key={p._id}>
+              <Card
+                sx={{
+                  maxWidth: 280,
+                  borderRadius: "15px",
+                  "&:hover": {
+                    boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.3)",
+                  },
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={`/product-photo/${p?._id}`}
+                  alt={p.name}
+                  sx={{ borderRadius: "10px 10px 0 0" }}
+                />
+                <CardContent>
+                  <Typography variant="h6" color="text.primary">
+                    {p.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {p.description.substring(0, 25)}...
+                  </Typography>
+                  <Typography variant="h6" color="text.primary">
+                    ${p.price}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </Button>
+                  <Button size="small" variant="contained" color="primary">
+                    Add To Cart
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      <Divider sx={{ my: 3 }} />
+
       <Footer />
       <Copyright />
     </>

@@ -56,8 +56,8 @@ const Navbar = () => {
             fontWeight: 600,
             backgroundColor: "transparent",
             transition: "none",
-            bottom: '2px',
-            textTransform: "none"
+            bottom: "2px",
+            textTransform: "none",
           }}
           aria-controls="simple-menu"
           aria-haspopup="true"
@@ -72,13 +72,54 @@ const Navbar = () => {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
+          sx={{
+            "& .MuiPaper-root": {
+              backgroundColor: "#303030",
+              color: "white",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.3)",
+            },
+          }}
         >
-          <NavLink to={"/categories"}>
-            <MenuItem onClick={handleClose}>All Categories</MenuItem>
+          <NavLink
+            to={"/categories"}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#f50057",
+                  color: "white",
+                },
+              }}
+            >
+              All Categories
+            </MenuItem>
           </NavLink>
           {categories?.map((c) => (
-            <NavLink to={`/categories/${c.slug}`} key={c._id}>
-              <MenuItem onClick={handleClose}>{c.name}</MenuItem>
+            <NavLink
+              to={`/shop?category=${c._id}`}
+              key={c._id}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#f50057",
+                    color: "white",
+                  },
+                }}
+              >
+                {c.name}
+              </MenuItem>
             </NavLink>
           ))}
         </Menu>
@@ -88,9 +129,11 @@ const Navbar = () => {
         <NavLink className="nav-link" to="/News">
           News
         </NavLink>
-        {!auth.user && <NavLink className="nav-link" to="/About">
-          About Us
-        </NavLink>}
+        {!auth.user && (
+          <NavLink className="nav-link" to="/About">
+            About Us
+          </NavLink>
+        )}
         <NavLink className="nav-link" to="/Cart">
           <Badge badgeContent={cart?.length} color="success">
             <ShoppingCartIcon />
@@ -123,10 +166,11 @@ const Navbar = () => {
           <>
             <NavLink
               className="nav-link"
-              to={`${auth?.user?.role === 1
-                ? "/Admin/Admindashboard"
-                : "/User/Userdashboard"
-                }`}
+              to={`${
+                auth?.user?.role === 1
+                  ? "/Admin/Admindashboard"
+                  : "/User/Userdashboard"
+              }`}
             >
               Dashboard
             </NavLink>

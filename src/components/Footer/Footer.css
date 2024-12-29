@@ -1,16 +1,17 @@
-.left-side {
-  margin-top: 30px;
-  margin-left: 10%;
-}
-
 footer {
   background-color: rgba(0, 0, 0, 0.865);
   display: flex;
   position: relative;
   z-index: 1;
+  margin-top: 50px;
 }
 
-footer img {
+.left-side {
+  margin-top: 30px;
+  margin-left: 10%;
+}
+
+.left-side img {
   margin-top: 50px;
   height: 80px;
   border-radius: 100%;

@@ -12,7 +12,6 @@ const Home = () => {
   const events_img = require("../../images/Homes/events.jpg");
   const clct_img = require("../../images/Homes/collection.jpg");
   const news_img = require("../../images/Homes/collection.jpg");
-  const own_img1 = require("../../images/Homes/keshav.jpeg");
 
   return (
     <>
@@ -112,11 +111,6 @@ const Home = () => {
         </div>
       </section>
       <Sponsor />
-      <section className="owners">
-        <img src={own_img1} alt="" />
-        <h4>"Owners"</h4>
-        <p>— Keshav Tulsyan</p>
-      </section>
       <Footer />
       <Copyright />
     </>
