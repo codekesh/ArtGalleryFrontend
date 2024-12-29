@@ -32,7 +32,7 @@ const Shop = () => {
   const [radio, setRadio] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [filteredTotal, setFilteredTotal] = useState(0);
 
   const getAllCategory = async () => {
     try {
@@ -52,14 +52,11 @@ const Shop = () => {
 
   const getAllProducts = async () => {
     try {
-      setLoading(true);
       const { data } = await axios.get(
         `/product-list/${page}`
       );
-      setLoading(false);
       setProducts(data.products);
     } catch (error) {
-      setLoading(false);
       console.log(error);
     }
   };
@@ -74,21 +71,17 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    if (page === 1) return;
-    loadMore();
+    nextPage();
   }, [page]);
 
-  const loadMore = async () => {
+  const nextPage = async () => {
     try {
-      setLoading(true);
       const { data } = await axios.get(
         `/product-list/${page}`
       );
-      setLoading(false);
-      setProducts([...products, ...data?.products]);
+      setProducts([...data?.products]);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
 
@@ -120,9 +113,14 @@ const Shop = () => {
         }
       );
       setProducts(data?.products);
+      setFilteredTotal(data?.products.length);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handlePageChange = (pageNum) => {
+    setPage(pageNum);
   };
 
   return (
@@ -247,17 +245,25 @@ const Shop = () => {
               </Grid>
             ))}
           </Grid>
-          {products && products.length < total && (
-            <Button
-              variant="contained"
-              sx={{ ml: 1 }}
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(page + 1);
-              }}
-            >
-              {loading ? "Loading ..." : "Load More"}
-            </Button>
+          {products && (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              {Array.from(
+                {
+                  length: Math.ceil((checked.length || radio.length ? filteredTotal : total) / 4),
+                },
+                (_, i) => i + 1
+              ).map((pageNum) => (
+                <Button
+                  key={pageNum}
+                  variant={page === pageNum ? "contained" : "outlined"}
+                  sx={{ mx: 0.5 }}
+                  onClick={() => handlePageChange(pageNum)}
+                >
+                  {pageNum}
+                </Button>
+              ))}
+            </Box>
+
           )}
         </Box>
       </div>
