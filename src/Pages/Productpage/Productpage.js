@@ -12,7 +12,6 @@ import {
   Grid,
   Typography,
   Container,
-  Box,
   Divider,
   Paper,
 } from "@mui/material";
