@@ -4,6 +4,7 @@ import "./Footer.css";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import axiosInstance from "../../api/axiosInstance";
 
 const Footer = () => {
   const [name, setName] = useState("")
@@ -13,7 +14,7 @@ const Footer = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/create-subscribers", { name, email });
+      const res = await axiosInstance.post("/create-subscribers", { name, email });
       if (res.data.success) {
         toast.success(res.data.message);
       } else {

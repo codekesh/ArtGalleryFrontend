@@ -11,6 +11,7 @@ import CategoryForm from "../../../components/CategoryForm/CategoryForm";
 import "./CreateCategory.css";
 import { FixedSizeList } from "react-window";
 import Backdrop from "@mui/material/Backdrop";
+import axiosInstance from "../../../api/axiosInstance";
 
 const style = {
   position: "absolute",
@@ -34,7 +35,7 @@ const CreateCategory = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/create-category", { name });
+      const { data } = await axiosInstance.post("/create-category", { name });
       if (data?.success) {
         toast.success(`${data.category.name} is created`);
         getAllCategory();
@@ -48,7 +49,7 @@ const CreateCategory = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/category");
+      const { data } = await axiosInstance.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -65,7 +66,7 @@ const CreateCategory = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`/update-category/${selected._id}`, {
+      const { data } = await axiosInstance.put(`/update-category/${selected._id}`, {
         name: updatedName,
       });
       if (data.success) {
@@ -84,7 +85,7 @@ const CreateCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      const { data } = await axios.delete(`/delete-category/${id}`);
+      const { data } = await axiosInstance.delete(`/delete-category/${id}`);
       console.log(data)
       if (data.name) {
         toast.success(`${data.name}} is deleted`);

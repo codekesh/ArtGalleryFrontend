@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
+import axiosInstance from "../../api/axiosInstance";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/login", { email, password });
+      const res = await axiosInstance.post("/login", { email, password });
       if (res.data.success) {
         toast.success(res.data.message);
         setAuth({

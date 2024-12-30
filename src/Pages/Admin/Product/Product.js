@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../../api/axiosInstance";
 
 const updatePage = {
   display: "flex",
@@ -22,7 +23,7 @@ const Product = () => {
 
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/product");
+      const { data } = await axiosInstance.get("/product");
       setProduct(data.products);
     } catch (error) {
       console.log(error);

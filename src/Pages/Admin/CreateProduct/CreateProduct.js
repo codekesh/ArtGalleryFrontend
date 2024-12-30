@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import imageCompression from 'browser-image-compression';
+import axiosInstance from "../../../api/axiosInstance";
 
 const StyleCard = styled(Card)({
   width: "30%",
@@ -54,7 +55,7 @@ const CreateProduct = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/category");
+      const { data } = await axiosInstance.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -80,7 +81,7 @@ const CreateProduct = () => {
       productData.append("photo", compressedImage);
       productData.append("category", category);
       productData.append("shipping", shipping);
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         "/create-product",
         productData
       );

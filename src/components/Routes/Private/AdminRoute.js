@@ -3,6 +3,7 @@ import { useAuth } from "../../../context/AuthProvider";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Loading/Loading";
+import axiosInstance from "../../../api/axiosInstance";
 
 const AdminRoute = () => {
   const [ok, setOk] = useState(false);
@@ -10,7 +11,7 @@ const AdminRoute = () => {
 
   useEffect(() => {
     const authCheck = async () => {
-      const res = await axios.get("/admin-auth");
+      const res = await axiosInstance.get("/admin-auth");
       if (res.data.ok) {
         setOk(true);
       } else {

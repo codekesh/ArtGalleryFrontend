@@ -19,6 +19,7 @@ import {
   styled,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import axiosInstance from "../../../api/axiosInstance";
 
 const StyleCard = styled(Card)({
   width: "30%",
@@ -54,7 +55,7 @@ const UpdateProduct = () => {
 
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         `/product/${params.slug}`
       );
       console.log(data);
@@ -75,7 +76,7 @@ const UpdateProduct = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/category");
+      const { data } = await axiosInstance.get("/category");
       if (data) {
         setCategories(data);
       }
@@ -102,7 +103,7 @@ const UpdateProduct = () => {
       photo && productData.append("photo", photo);
       productData.append("category", category);
       productData.append("shipping", shipping);
-      const { data } = axios.put(
+      const { data } = axiosInstance.put(
         `/update-product/${id}`,
         productData
       );
@@ -122,7 +123,7 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      const { data } = await axios.delete(
+      const { data } = await axiosInstance.delete(
         `/delete-product/${id}`
       );
       toast.success(`${data} Deleted Successfully`);

@@ -19,6 +19,7 @@ import {
   CardMedia,
   CardContent
 } from "@mui/material";
+import axiosInstance from "../../../api/axiosInstance";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -26,7 +27,7 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/orders");
+      const { data } = await axiosInstance.get("/orders");
       console.log(data);
       setOrders(data);
     } catch (error) {

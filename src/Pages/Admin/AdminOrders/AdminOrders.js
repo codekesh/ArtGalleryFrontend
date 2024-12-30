@@ -21,6 +21,7 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
+import axiosInstance from "../../../api/axiosInstance";
 
 export const AdminOrders = () => {
   const [status, setStatus] = useState([
@@ -35,7 +36,7 @@ export const AdminOrders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/all-orders");
+      const { data } = await axiosInstance.get("/all-orders");
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -48,7 +49,7 @@ export const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      await axios.put(`/order-status/${orderId}`, { status: value });
+      await axiosInstance.put(`/order-status/${orderId}`, { status: value });
       getOrders();
     } catch (error) {
       console.log(error);

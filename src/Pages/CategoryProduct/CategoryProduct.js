@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 
 const CategoryProduct = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const CategoryProduct = () => {
 
   const getProductsByCategory = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/product-category/${params?.slug}`);
+      const { data } = await axiosInstance.get(`/product-category/${params?.slug}`);
       setCategory(data?.category);
       setProducts(data?.products);
     } catch (error) {

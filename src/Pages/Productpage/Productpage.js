@@ -15,6 +15,7 @@ import {
   Divider,
   Paper,
 } from "@mui/material";
+import axiosInstance from "../../api/axiosInstance";
 
 const Productpage = () => {
   const params = useParams();
@@ -28,7 +29,7 @@ const Productpage = () => {
 
   const getProduct = async () => {
     try {
-      const { data } = await axios.get(`/product/${params.slug}`);
+      const { data } = await axiosInstance.get(`/product/${params.slug}`);
       setProduct(data?.productData);
       getSimilarProduct(data?.productData._id, data?.productData.category._id);
     } catch (error) {
@@ -38,7 +39,7 @@ const Productpage = () => {
 
   const getSimilarProduct = async (pid, cid) => {
     try {
-      const { data } = await axios.get(`/related-product/${pid}/${cid}`);
+      const { data } = await axiosInstance.get(`/related-product/${pid}/${cid}`);
       setRelatedProducts(data?.products);
     } catch (error) {
       console.log(error);

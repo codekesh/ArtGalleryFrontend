@@ -22,6 +22,7 @@ import { Prices } from "../../components/Prices/Prices";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCart } from "../../context/CartProvider";
+import axiosInstance from "../../api/axiosInstance";
 
 const Shop = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Shop = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/category`);
+      const { data } = await axiosInstance.get(`${process.env.REACT_APP_API_URL}/category`);
       if (data) {
         setCategories(data);
       }
@@ -62,7 +63,7 @@ const Shop = () => {
 
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         `/product-list/${page}`
       );
       setProducts(data.products);
@@ -73,7 +74,7 @@ const Shop = () => {
 
   const getTotal = async () => {
     try {
-      const { data } = await axios.get("/product-count");
+      const { data } = await axiosInstance.get("/product-count");
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -86,7 +87,7 @@ const Shop = () => {
 
   const nextPage = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         `/product-list/${page}`
       );
       setProducts([...data?.products]);
@@ -117,7 +118,7 @@ const Shop = () => {
 
   const filterProduct = async () => {
     try {
-      const { data } = await axios.post("/product-filters", {
+      const { data } = await axiosInstance.post("/product-filters", {
         checked,
         radio,
       });

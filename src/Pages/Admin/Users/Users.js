@@ -14,6 +14,7 @@ import {
   Paper,
 } from "@mui/material";
 import axios from "axios";
+import axiosInstance from "../../../api/axiosInstance";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -21,7 +22,7 @@ const Users = () => {
   // Fetching users data
   const getUsers = async () => {
     try {
-      const { data } = await axios.get("/users");
+      const { data } = await axiosInstance.get("/users");
       setUsers(data);
     } catch (error) {
       console.error("Error fetching users", error);

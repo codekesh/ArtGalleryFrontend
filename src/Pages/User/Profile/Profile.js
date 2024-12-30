@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import axiosInstance from "../../../api/axiosInstance";
 
 const Profile = () => {
   const [auth, setAuth] = useAuth();
@@ -58,7 +59,7 @@ const Profile = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.put("/profile", {
+      const { data } = await axiosInstance.put("/profile", {
         name,
         dob,
         gender,

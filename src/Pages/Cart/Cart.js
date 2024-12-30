@@ -16,6 +16,7 @@ import DropIn from "braintree-web-drop-in-react";
 import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
 import Copyright from "../../components/Copyright/Copyright";
+import axiosInstance from "../../api/axiosInstance";
 
 const Cart = () => {
   const [auth] = useAuth();
@@ -52,7 +53,7 @@ const Cart = () => {
 
   const getToken = async () => {
     try {
-      const { data } = await axios.get("/braintree/token");
+      const { data } = await axiosInstance.get("/braintree/token");
       setClientToken(data?.clientToken);
     } catch (error) {
       console.log(error);
@@ -67,7 +68,7 @@ const Cart = () => {
     try {
       setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post("/braintree/payment", {
+      const { data } = await axiosInstance.post("/braintree/payment", {
         nonce,
         cart,
       });

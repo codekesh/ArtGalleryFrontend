@@ -5,6 +5,7 @@ import { TextField, Button, Grid, Typography, Container } from "@mui/material";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Forgot = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/forgotPassword", {
+      const res = await axiosInstance.post("/forgotPassword", {
         email,
         newpassword,
         answer,

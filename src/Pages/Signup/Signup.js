@@ -17,6 +17,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 
 const Signup = () => {
   const [dob, setDob] = useState("");
@@ -35,7 +36,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/users", {
+      const res = await axiosInstance.post("/users", {
         dob,
         name,
         email,

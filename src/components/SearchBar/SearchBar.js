@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, IconButton, TextField } from "@mui/material";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
+import axiosInstance from "../../api/axiosInstance";
 
 const SearchBar = () => {
   const [values, setValues] = useSearch();
@@ -12,7 +13,7 @@ const SearchBar = () => {
 
   const handleSearch = async () => {
     try {
-      const { data } = await axios.get(`/search/${keyword}`);
+      const { data } = await axiosInstance.get(`/search/${keyword}`);
       setValues({ ...values, results: data });
       navigate("/search");
     } catch (error) {
