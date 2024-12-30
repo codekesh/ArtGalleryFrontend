@@ -19,6 +19,7 @@ import {
   styled,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import imageCompression from 'browser-image-compression';
 
 const StyleCard = styled(Card)({
   width: "30%",
@@ -49,6 +50,7 @@ const CreateProduct = () => {
   const [artists, setArtists] = useState("");
   const [photo, setPhoto] = useState("");
   const [shipping, setShipping] = useState("");
+  const [compressedImage, setCompressedImage] = useState([]);
 
   const getAllCategory = async () => {
     try {
@@ -75,7 +77,7 @@ const CreateProduct = () => {
       productData.append("price", price);
       productData.append("quantity", quantity);
       productData.append("artists", artists);
-      productData.append("photo", photo);
+      productData.append("photo", compressedImage);
       productData.append("category", category);
       productData.append("shipping", shipping);
       const { data } = await axios.post(
@@ -94,8 +96,22 @@ const CreateProduct = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    setPhoto(e.target.files[0]);
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setCompressedImage(compressedFile);
+      setPhoto(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

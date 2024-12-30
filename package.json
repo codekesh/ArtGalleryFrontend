@@ -16,6 +16,8 @@
     "axios": "^1.6.0",
     "braintree": "^3.23.0",
     "braintree-web-drop-in-react": "^1.2.1",
+    "browser-image-compression": "^2.0.2",
+    "compress.js": "^2.1.2",
     "concurrently": "^8.2.2",
     "moment": "^2.30.1",
     "react": "^18.2.0",

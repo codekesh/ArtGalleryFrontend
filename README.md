@@ -2,9 +2,7 @@
 
 ### Problem
 
-1. Performance of the page is decrease while increase in item
-2. Any unwanted page will show the error page not found
-3. Instead load more add pages
+1. Any unwanted page will show the error page not found
 
 ### What shall be implement
 
