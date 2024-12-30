@@ -3,7 +3,6 @@ import Footer from "../../../components/Footer/Footer";
 import Copyright from "../../../components/Copyright/Copyright";
 import UserMenu from "../../../components/UserMenu/UserMenu";
 import { useAuth } from "../../../context/AuthProvider";
-import axios from "axios";
 import moment from "moment";
 import {
   Table,

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import "./Footer.css";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import axiosInstance from "../../api/axiosInstance";
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSearch } from "../../context/SearchProvider";
 import { useNavigate } from "react-router-dom";
 import { Box, IconButton, TextField } from "@mui/material";
-import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosInstance from "../../api/axiosInstance";
 

@@ -5,7 +5,6 @@ import AdminMenu from "../../../components/AdminMenu/AdminMenu";
 import { toast, ToastContainer } from "react-toastify";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import axios from "axios";
 import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import CategoryForm from "../../../components/CategoryForm/CategoryForm";
 import "./CreateCategory.css";

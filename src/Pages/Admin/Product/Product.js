@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AdminMenu from "../../../components/AdminMenu/AdminMenu";
 import Footer from "../../../components/Footer/Footer";
 import Copyright from "../../../components/Copyright/Copyright";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";

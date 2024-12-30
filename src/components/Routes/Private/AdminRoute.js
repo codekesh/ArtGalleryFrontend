@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthProvider";
 import { Outlet } from "react-router-dom";
-import axios from "axios";
 import Loading from "../Loading/Loading";
 import axiosInstance from "../../../api/axiosInstance";
 

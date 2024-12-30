@@ -17,7 +17,6 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { Prices } from "../../components/Prices/Prices";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";

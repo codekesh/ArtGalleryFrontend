@@ -3,7 +3,6 @@ import Footer from "../../components/Footer/Footer";
 import Copyright from "../../components/Copyright/Copyright";
 import { TextField, Button, Grid, Typography, Container } from "@mui/material";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 

@@ -11,7 +11,6 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import DropIn from "braintree-web-drop-in-react";
 import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../components/Footer/Footer";

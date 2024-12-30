@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import Copyright from "../../components/Copyright/Copyright";
-import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Button,

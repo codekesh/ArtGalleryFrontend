@@ -13,7 +13,6 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import axios from "axios";
 import axiosInstance from "../../../api/axiosInstance";
 
 const Users = () => {

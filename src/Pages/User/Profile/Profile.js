@@ -15,7 +15,6 @@ import {
   FormLabel,
   RadioGroup,
 } from "@mui/material";
-import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import axiosInstance from "../../../api/axiosInstance";
 
