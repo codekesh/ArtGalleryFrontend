@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  api:
+    image: codekesh/backend-whisperer:latest
+    ports:
+      - "5000:8000"
+    networks:
+      - app-network
+
+  ui:
+    image: ui-image
+    build:
+      context: ../path-to-ui-repo
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - REACT_APP_API_URL=http://api:5000
+
+networks:
+  app-network:
+    driver: bridge
