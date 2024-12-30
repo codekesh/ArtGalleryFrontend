@@ -38,7 +38,7 @@ const Shop = () => {
 
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/category");
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/category`);
       if (data) {
         setCategories(data);
       }
